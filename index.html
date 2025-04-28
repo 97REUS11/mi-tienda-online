@@ -1,110 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+<head> 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GADGESVERDES</title>
+  <title>MyGadged</title>
   <style>
     body {
+      background-color: #f4f4f4;
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f9;
       color: #333;
     }
     header {
-      background-color: #2c3e50;
-      color: white;
-      padding: 20px 0;
+      background-color: #111;
+      color: #fff;
       text-align: center;
+      padding: 2rem 1rem;
     }
     header h1 {
-      font-size: 2.5em;
       margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
     }
-    .navbar {
+    .container {
       display: flex;
       justify-content: center;
-      margin-top: 30px;
-      background-color: #34495e;
-      padding: 10px;
+      flex-wrap: wrap;
+      padding: 2rem;
     }
-    .navbar a {
-      text-decoration: none;
-      color: white;
-      margin: 0 20px;
-      font-size: 1.2em;
-      transition: color 0.3s;
+    .category {
+      background: #fff;
+      border-radius: 10px;
+      margin: 1rem;
+      text-align: center;
+      padding: 1.5rem;
+      width: 250px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
     }
-    .navbar a:hover {
-      color: #1abc9c;
+    .category:hover {
+      transform: scale(1.05);
     }
-    .categoria {
-      display: flex;
-      justify-content: center;
-      margin-top: 40px;
-    }
-    .categoria div {
-      margin: 0 20px;
-      padding: 15px;
-      background-color: #ecf0f1;
+    .category img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
       border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
     }
-    .categoria div:hover {
-      background-color: #bdc3c7;
-    }
-    .categoria h2 {
-      color: #2c3e50;
+    .category h2 {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      color: #111;
     }
     footer {
-      background-color: #34495e;
+      background-color: #111;
       color: white;
       text-align: center;
-      padding: 15px 0;
-      position: fixed;
-      width: 100%;
+      padding: 1rem;
+      position: relative;
       bottom: 0;
+      width: 100%;
+      margin-top: 3rem;
     }
     footer a {
       color: #1abc9c;
       text-decoration: none;
-      font-size: 1.1em;
-    }
-    footer a:hover {
-      color: #16a085;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>GADGESVERDES</h1>
-  <p>¡Tu tienda online de productos de calidad!</p>
+  <h1>MyGadged</h1>
 </header>
 
-<!-- Barra de navegación (Menú principal) -->
-<div class="navbar">
-  <a href="accesorios.html">Accesorios para Celulares</a>
-</div>
-
-<!-- Sección de Categorías -->
-<section class="categoria">
-  <div>
+<section class="container">
+  <a href="accesorios.html" class="category">
+    <img src="https://images.unsplash.com/photo-1619983081563-430f636fe512?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Accesorios para Celulares">
     <h2>Accesorios para Celulares</h2>
-    <a href="accesorios.html">
-      <img src="https://m.media-amazon.com/images/I/61iN5byJrXL._AC_SL1500_.jpg" alt="Cargador rápido" style="width: 100%; max-width: 300px;">
-    </a>
-  </div>
+  </a>
 </section>
 
-<!-- Footer con información de contacto al final de la página -->
 <footer>
-  <p>Contáctanos: <a href="https://wa.me/50761431537">WhatsApp</a> | Email: <a href="mailto:abdielsanchez103@gmail.com">abdielsanchez103@gmail.com</a></p>
+  <p>Contáctanos: <a href="https://wa.me/50761431537" target="_blank">WhatsApp</a> | Email: <a href="mailto:abdielsanchez103@gmail.com">abdielsanchez103@gmail.com</a></p>
 </footer>
 
 </body>
-</html>
-
 </html>
