@@ -22,24 +22,45 @@
       font-size: 2.5em;
       margin: 0;
     }
-    .marca {
+    .categoria {
       display: flex;
       justify-content: center;
       margin-top: 40px;
+      gap: 30px;
     }
-    .marca div {
-      margin: 0 20px;
+    .categoria div {
       padding: 15px;
       background-color: #ecf0f1;
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      text-align: center;
+      width: 250px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     }
-    .marca div:hover {
+    .categoria div:hover {
       background-color: #bdc3c7;
     }
-    .marca h2 {
+    .categoria h2 {
       color: #2c3e50;
+      font-size: 1.6em;
+    }
+    .categoria img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    a {
+      text-decoration: none;
+      color: #1abc9c;
+      font-size: 1.2em;
+      display: inline-block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    a:hover {
+      color: #16a085;
     }
   </style>
 </head>
@@ -49,14 +70,22 @@
   <h1>Accesorios para Celulares</h1>
 </header>
 
-<section class="marca">
+<!-- Sección de Categorías -->
+<section class="categoria">
   <div>
-    <h2>APPLE</h2>
-    <a href="apple-modelos.html" style="text-decoration: none; color: inherit;">Ver Modelos</a>
+    <img src="https://image.shutterstock.com/image-photo/photo-smartphone-case-260nw-1165744932.jpg" alt="Fundas" />
+    <h2>Fundas</h2>
+    <a href="fundas.html">Ver Fundas</a>
   </div>
   <div>
-    <h2>XIAOMI</h2>
-    <a href="xiaomi-modelos.html" style="text-decoration: none; color: inherit;">Ver Modelos</a>
+    <img src="https://image.shutterstock.com/image-photo/charging-cable-on-black-background-260nw-1924964359.jpg" alt="Cables" />
+    <h2>Cables</h2>
+    <a href="cables.html">Ver Cables</a>
+  </div>
+  <div>
+    <img src="https://image.shutterstock.com/image-photo/charger-adapter-on-black-background-260nw-1013157015.jpg" alt="Cargadores" />
+    <h2>Cargadores</h2>
+    <a href="cargadores.html">Ver Cargadores</a>
   </div>
 </section>
 
