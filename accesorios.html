@@ -3,64 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accesorios para Celulares</title>
+  <title>Accesorios para Celulares - MyGadged</title>
   <style>
     body {
+      background-color: #f4f4f4;
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f9;
       color: #333;
     }
     header {
-      background-color: #2c3e50;
-      color: white;
-      padding: 20px 0;
+      background-color: #111;
+      color: #fff;
       text-align: center;
+      padding: 2rem 1rem;
     }
     header h1 {
-      font-size: 2.5em;
       margin: 0;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
     }
-    .categoria {
+    .container {
       display: flex;
       justify-content: center;
-      margin-top: 40px;
-      gap: 30px;
+      flex-wrap: wrap;
+      padding: 2rem;
     }
-    .categoria div {
-      padding: 15px;
-      background-color: #ecf0f1;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    .item {
+      background: #fff;
+      border-radius: 10px;
+      margin: 1rem;
       text-align: center;
-      width: 250px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      width: 220px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
     }
-    .categoria div:hover {
-      background-color: #bdc3c7;
+    .item:hover {
+      transform: scale(1.05);
     }
-    .categoria h2 {
-      color: #2c3e50;
-      font-size: 1.6em;
-    }
-    .categoria img {
+    .item img {
       width: 100%;
-      max-width: 200px;
+      height: 180px;
+      object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 10px;
     }
-    a {
-      text-decoration: none;
+    .item h2 {
+      margin-top: 1rem;
+      font-size: 1.3rem;
+      color: #111;
+    }
+    footer {
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+    footer a {
       color: #1abc9c;
-      font-size: 1.2em;
-      display: inline-block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    a:hover {
-      color: #16a085;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -70,24 +72,24 @@
   <h1>Accesorios para Celulares</h1>
 </header>
 
-<!-- Sección de Categorías -->
-<section class="categoria">
-  <div>
-    <img src="https://phonetify.com.co/wp-content/uploads/productos/fundas/ultra/imagenes/iphone-16-pro-max/restricted-area-funda-para-celular_iphone-16-pro-max.webp" alt="Fundas" />
-    <h2>Fundas</h2>
-    <a href="fundas.html">Ver Fundas</a>
-  </div>
-  <div>
-    <img src="https://www.todotumovil.com/upload/stblog/1/101/141/101141large.jpg" alt="Cables" />
+<section class="container">
+  <a href="cables.html" class="item">
+    <img src="https://images.unsplash.com/photo-1619983013899-91f5f33e15b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cables">
     <h2>Cables</h2>
-    <a href="cables.html">Ver Cables</a>
-  </div>
-  <div>
-    <img src="https://shop.samsung.com/latin/cac/pub/media/catalog/product/cache/a69170b4a4f0666a52473c2224ba9220/e/p/ep-t2510n_combo.png" alt="Cargadores" />
+  </a>
+  <a href="fundas.html" class="item">
+    <img src="https://images.unsplash.com/photo-1619983204545-7d49ecddf2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Fundas">
+    <h2>Fundas</h2>
+  </a>
+  <a href="cargadores.html" class="item">
+    <img src="https://images.unsplash.com/photo-1619983042690-87b78eb3c6ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cargadores">
     <h2>Cargadores</h2>
-    <a href="cargadores.html">Ver Cargadores</a>
-  </div>
+  </a>
 </section>
+
+<footer>
+  <p>Contáctanos: <a href="https://wa.me/50761431537" target="_blank">WhatsApp</a> | Email: <a href="mailto:abdielsanchez103@gmail.com">abdielsanchez103@gmail.com</a></p>
+</footer>
 
 </body>
 </html>
