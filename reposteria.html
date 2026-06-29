@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Pastelería - Cotizador de Dulces</title>
+<title>Mery Cake - Pasteles y Postres</title>
 
 <style>
   :root {
@@ -27,7 +27,7 @@
     overflow: hidden;
   }
 
-  /* FONDO CENTRADO PREMIUM */
+  /* FONDO CORREGIDO PARA MÓVILES */
   #background-container {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -35,17 +35,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #000;
+    background: #121212;
   }
 
   #bg-image {
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: brightness(0.35) blur(2px);
+    filter: brightness(0.35) blur(1px);
     transition: opacity 0.4s ease-in-out;
   }
 
-  /* NAVEGACIÓN MÓVIL */
+  /* NAVEGACIÓN MÓVIL OPTIMIZADA */
   .navbar {
     background-color: #1a1a1a;
     padding: 15px 5px;
@@ -67,7 +67,7 @@
 
   .nav-btn.active { background: var(--rosa-pastel); color: black; }
 
-  /* CONTENIDO SCROLLEABLE */
+  /* CONTENIDO EN CHASSIS VERTICAL */
   .main-content {
     flex-grow: 1;
     overflow-y: auto;
@@ -83,22 +83,22 @@
     width: 100%;
     max-width: 480px;
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 22px;
     letter-spacing: 0.5px;
   }
 
-  /* HERO BOX (PORTADA INICIO) */
   .hero-box {
     text-align: center;
-    padding: 40px 20px;
+    padding: 35px 20px;
     background: rgba(0,0,0,0.6);
     border-radius: 25px;
     backdrop-filter: blur(10px);
     max-width: 480px;
     border: 1px solid rgba(255,183,178,0.2);
+    width: 100%;
   }
 
-  /* TARJETAS INTERACTIVAS DE MODELOS/SABORES */
+  /* TARJETAS DE PRODUCTOS */
   .plato-card {
     display: flex;
     align-items: center;
@@ -124,11 +124,10 @@
   .img-container img { width: 100%; height: 100%; object-fit: cover; }
 
   .plato-info { flex: 1; }
-  .plato-info h4 { font-size: 17px; margin-bottom: 4px; }
+  .plato-info h4 { font-size: 16px; margin-bottom: 4px; }
   .plato-info p { color: var(--texto-secundario); font-size: 12px; margin-bottom: 5px; }
   .plato-info span { color: var(--dorado); font-weight: bold; font-size: 16px; }
 
-  /* SELECTORES INTERACTIVOS DENTRO DE LA TARJETA */
   .config-selector {
     background: #111;
     color: white;
@@ -141,7 +140,6 @@
     outline: none;
   }
 
-  /* BOTÓN SELECCIONAR */
   .btn-agregar {
     background: var(--rosa-pastel);
     color: black;
@@ -159,7 +157,32 @@
     border: 1px solid var(--rosa-pastel);
   }
 
-  /* BARRA INFERIOR DE COTIZACIÓN */
+  /* SECCIÓN DE DULCE PERSONALIZADO */
+  .custom-box {
+    width: 100%;
+    max-width: 480px;
+    background: linear-gradient(135deg, #1f1414 0%, #121212 100%);
+    border: 2px dashed var(--rosa-pastel);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .custom-input {
+    width: 100%;
+    padding: 10px;
+    background: #1a1a1a;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 10px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    font-family: inherit;
+    font-size: 13px;
+  }
+
+  /* BARRA DE COTIZACIÓN */
   .cart-floating {
     position: fixed;
     bottom: 25px;
@@ -179,7 +202,7 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.7);
   }
 
-  /* VENTANA MODAL DE CONFIRMACIÓN */
+  /* MODAL */
   #modal-confirm {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -201,13 +224,8 @@
     text-align: center;
   }
 
-  .modal-btns {
-    display: flex; gap: 10px; margin-top: 20px;
-  }
-
-  .btn-modal {
-    flex: 1; padding: 14px; border-radius: 15px; border: none; font-weight: bold;
-  }
+  .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+  .btn-modal { flex: 1; padding: 14px; border-radius: 15px; border: none; font-weight: bold; }
   .btn-si { background: var(--rosa-pastel); color: black; }
   .btn-no { background: #333; color: white; }
 </style>
@@ -215,32 +233,30 @@
 <body>
 
   <div id="background-container">
-    <img id="bg-image" src="https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=1000">
+    <img id="bg-image" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000">
   </div>
 
   <div class="navbar">
-    <button class="nav-btn active" onclick="cambiarVista('inicio', this)">Portada</button>
-    <button class="nav-btn" onclick="cambiarVista('pasteles', this)">Modelos</button>
-    <button class="nav-btn" onclick="cambiarVista('sabores', this)">Sabores Info</button>
+    <button class="nav-btn active" onclick="cambiarVista('inicio', this)">Mery Cake</button>
+    <button class="nav-btn" onclick="cambiarVista('modelos', this)">Modelos</button>
     <button class="nav-btn" onclick="cambiarVista('info', this)">Pedidos</button>
   </div>
 
   <div class="main-content" id="app-content"></div>
 
   <div class="cart-floating" id="cart-bar" onclick="abrirConfirmacion()">
-    <span id="cart-count">0 DULCES</span>
-    <span>REVISAR COTIZACIÓN</span>
+    <span id="cart-count">0 SELECCIONES</span>
+    <span>REVISAR DETALLES</span>
     <span id="cart-total">$0.00</span>
   </div>
 
   <div id="modal-confirm">
     <div class="modal-content">
-      <h2 style="color:var(--rosa-pastel); margin-bottom:15px;">Tu Pedido de Cumpleaños</h2>
+      <h2 style="color:var(--rosa-pastel); margin-bottom:15px;">Confirmación de Solicitud</h2>
       <div id="resumen-pedido" style="text-align:left; margin-bottom:20px; font-size:14px; color:#ccc; line-height: 1.5;"></div>
-      <p style="font-weight:bold; margin-bottom:15px; font-size:13px;">⚠️ Nota: Los precios son estimados. El diseño final se acuerda en WhatsApp.</p>
       <div class="modal-btns">
         <button class="btn-modal btn-no" onclick="cerrarConfirmacion()">MODIFICAR</button>
-        <button class="btn-modal btn-si" onclick="enviarWhatsApp()">ENVIAR WHATSAPP</button>
+        <button class="btn-modal btn-si" onclick="enviarWhatsApp()">ENVIAR A WHATSAPP</button>
       </div>
     </div>
   </div>
@@ -248,23 +264,30 @@
 <script>
   let cotizacion = {};
   let vistaActual = 'inicio';
+  
+  // Guardado de personalización de dulces
+  let dulcePersonalizado = { activo: false, detalles: "", fotoUrl: "" };
 
   const imagenes = {
-    inicio: "https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=1000",
-    sabores: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000",
+    inicio: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000",
+    modelos: "https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=1000",
     info: "https://images.unsplash.com/photo-1516685018646-549198525c1b?w=1000"
   };
 
-  // Base de datos de modelos de dulces
-  const dulcesModelos = [
-    { id: 1, n: "Dulce Infantil Temático", pBase: 25.00, img: "https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=600", desc: "Diseño personalizado con fondant o crema de tus personajes favoritos." },
-    { id: 2, n: "Dulce de Cumpleaños Elegante", pBase: 35.00, img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600", desc: "Acabados modernos, flores artificiales o de azúcar, drips dorados." },
-    { id: 3, n: "Dulce Tendencia (Minimalista)", pBase: 20.00, img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?w=600", desc: "Estilo coreano (Lunchbox cakes) o frases cómicas en tendencia." }
-  ];
-
-  // Modificadores de precios según combinaciones escogidas por el cliente
-  const preciosTamaño = { "Pequeño (10-12 porciones)": 0, "Mediano (20-25 porciones)": 15, "Grande (30-40 porciones)": 30 };
-  const preciosSabor = { "Vainilla Tradicional (+ $0)": 0, "Chocolate Supremo (+ $3)": 3, "Red Velvet Premium (+ $5)": 5 };
+  // Base de datos agrupada en las 3 secciones requeridas
+  const menuPasteleria = {
+    pasteles: [
+      { id: "pas1", n: "Pastel de Cumpleaños Mediano", pBase: 30.00, img: "https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=600", desc: "Rendimiento aproximado de 20 a 25 porciones." },
+      { id: "pas2", n: "Pastel de Cumpleaños Familiar", pBase: 45.00, img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600", desc: "Rendimiento aproximado de 35 a 40 porciones." }
+    ],
+    postres: [
+      { id: "pos1", n: "Mini Dulces Variados (Docena)", pBase: 12.00, img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600", desc: "Caja de 12 unidades surtidas ideales para mesas de dulces." },
+      { id: "pos2", n: "Cupcakes Decorados (6 unidades)", pBase: 10.00, img: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=600", desc: "Con cobertura cremosa combinada a juego." }
+    ],
+    especialidad: [
+      { id: "esp1", n: "Tres Leches Mery Cake", pBase: 18.00, img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?w=600", desc: "Nuestra receta ultra húmeda especial de la casa." }
+    ]
+  };
 
   function cambiarVista(vista, btn) {
     vistaActual = vista;
@@ -278,21 +301,11 @@
         document.getElementById('bg-image').src = imagenes.inicio;
         container.innerHTML = `
           <div class="hero-box">
-            <h1 style="font-size:28px; margin-bottom:10px;">Dulces de <br><span style="color:var(--rosa-pastel)">Cumpleaños</span></h1>
-            <p style="color:#ccc; margin-bottom:20px; font-size:14px;">Cotiza el dulce de tus sueños interactivamente y reserva tu fecha al instante.</p>
-            <button class="nav-btn active" style="width:100%; padding:14px;" onclick="irAModelos()">VER DISEÑOS Y COTIZAR</button>
-          </div>`;
-        return;
-    }
-
-    if (vista === 'sabores') {
-        document.getElementById('bg-image').src = imagenes.sabores;
-        container.innerHTML = `
-          <div class="hero-box">
-            <h2 class="categoria-titulo" style="text-align:center">Nuestros Sabores</h2>
-            <p style="margin-bottom:10px; text-align:left;">🍰 <b>Bizcochos:</b> Vainilla, Chocolate Chips, Red Velvet, Zanahoria.</p>
-            <p style="margin-bottom:10px; text-align:left;">🍫 <b>Rellenos:</b> Dulce de leche, Ganache de Chocolate, Crema de Avellanas.</p>
-            <p style="font-size:12px; color:var(--dorado); margin-top:15px;">* Ciertos sabores e ingredientes premium conllevan un ajuste en el costo final.</p>
+            <h1 style="font-size:32px; color:var(--rosa-pastel); font-weight:800; margin-bottom:5px;">Mery Cake</h1>
+            <p style="font-size:16px; font-weight:bold; color:white; margin-bottom:15px;">Pasteles y Postres</p>
+            <p style="color:#eee; font-style:italic; font-size:14px; margin-bottom:5px;">"Los dulces son momentos"</p>
+            <p style="color:#ccc; font-size:13px; margin-bottom:25px;">Encuentra variedad de postres y pasteles 100% personalizados y de muchos sabores.</p>
+            <button class="nav-btn active" style="width:100%; padding:14px;" onclick="irAModelos()">VER MODELOS</button>
           </div>`;
         return;
     }
@@ -301,79 +314,124 @@
         document.getElementById('bg-image').src = imagenes.info;
         container.innerHTML = `
           <div class="hero-box">
-            <h2 class="categoria-titulo" style="text-align:center">Cómo Pedir</h2>
-            <p style="margin-bottom:10px;">1. Selecciona el modelo, tamaño y sabor.</p>
-            <p style="margin-bottom:10px;">2. Revisa tu cotización estimada.</p>
-            <p style="margin-bottom:10px;">3. Envíanos los detalles por WhatsApp para confirmar fecha y abono.</p>
-            <p style="margin-top:15px; color:var(--rosa-pastel); font-weight:bold;">📍 Sajalices, Panamá Oeste</p>
+            <h2 style="color:var(--rosa-pastel); margin-bottom:15px; font-size:20px;">Información de Pedidos</h2>
+            <p style="margin-bottom:12px; font-size:14px;">📍 Ubicación: Sajalices, Panamá Oeste</p>
+            <p style="margin-bottom:12px; font-size:14px;">💬 Los pedidos se coordinan y procesan de forma personalizada mediante atención directa.</p>
+            <p style="font-size:12px; color:var(--dorado); margin-top:20px;">¡Prepara tu cotización interactiva en la pestaña de modelos!</p>
           </div>`;
         return;
     }
 
-    // LISTADO INTERACTIVO DE MODELOS DE DULCE
-    let html = `<h2 class="categoria-titulo">Selecciona e interactúa</h2>`;
-    dulcesModelos.forEach(item => {
-      const yaAgregado = cotizacion[item.id];
-      html += `
-        <div class="plato-card" onclick="document.getElementById('bg-image').src='${item.img}'">
-          <div class="img-container"><img src="${item.img}"></div>
-          <div class="plato-info">
-            <h4>${item.n}</h4>
-            <p>${item.desc}</p>
-            
-            <label style="font-size:11px; color:var(--rosa-pastel)">Tamaño / Porciones:</label>
-            <select class="config-selector" id="size-${item.id}" onchange="calcularPrecioCard(${item.id}, ${item.pBase})">
-              <option value="Pequeño (10-12 porciones)">Pequeño (10-12 porciones) Base</option>
-              <option value="Mediano (20-25 porciones)">Mediano (20-25 porciones) (+ $15.00)</option>
-              <option value="Grande (30-40 porciones)">Grande (30-40 porciones) (+ $30.00)</option>
-            </select>
+    // VISTA MODELOS CON SUS 3 SECCIONES NUEVAS
+    document.getElementById('bg-image').src = imagenes.modelos;
+    let html = `<h2 class="categoria-titulo">Selecciona a tu gusto</h2>`;
 
-            <label style="font-size:11px; color:var(--rosa-pastel); display:block; margin-top:5px;">Sabor de Masa:</label>
-            <select class="config-selector" id="flavor-${item.id}" onchange="calcularPrecioCard(${item.id}, ${item.pBase})">
-              <option value="Vainilla Tradicional (+ $0)">Vainilla Tradicional</option>
-              <option value="Chocolate Supremo (+ $3)">Chocolate Supremo (+ $3.00)</option>
-              <option value="Red Velvet Premium (+ $5)">Red Velvet Premium (+ $5.00)</option>
-            </select>
+    // 1. SECCIÓN PASTELES
+    html += `<h3 style="color:var(--dorado); width:100%; max-width:480px; margin: 10px 0 15px 0; border-left:3px solid var(--rosa-pastel); padding-left:8px; font-size:16px;">PASTELES</h3>`;
+    menuPasteleria.pasteles.forEach(item => html += generarCardHtml(item, true));
 
-            <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
-              <span id="price-card-${item.id}">$${item.pBase.toFixed(2)}</span>
-              <button class="btn-agregar ${yaAgregado ? 'selected' : ''}" id="btn-${item.id}" onclick="event.stopPropagation(); toggleDulce(${item.id}, '${item.n}', ${item.pBase})">
-                ${yaAgregado ? 'QUITAR' : 'SELECCIONAR'}
-              </button>
-            </div>
-          </div>
-        </div>`;
-    });
+    // BOTÓN/ZONA DE DULCE PERSONALIZADO TOTAL
+    html += `
+      <div class="custom-box">
+        <h4 style="color:var(--rosa-pastel); font-size:15px; margin-bottom:6px;">✨ ¿Deseas un Dulce 100% Personalizado?</h4>
+        <p style="font-size:12px; color:var(--texto-secundario); margin-bottom:10px;">Cuéntanos tu idea o pega el enlace de tu foto (de ImgBB) aquí abajo:</p>
+        <textarea class="custom-input" id="custom-desc" rows="2" placeholder="Ej: Quiero un dulce de dos pisos con temática de astronauta..." oninput="guardarDiseño()">${dulcePersonalizado.detalles}</textarea>
+        <input class="custom-input" type="url" id="custom-photo" placeholder="Pegar enlace de imagen de ImgBB (https://...)" value="${dulcePersonalizado.fotoUrl}" oninput="guardarDiseño()">
+        <button class="btn-agregar" id="btn-custom-toggle" style="margin:5px 0 0 0; width:100%;" onclick="toggleCustom()">
+          ${dulcePersonalizado.activo ? 'CANCELAR DISEÑO PROPIO' : 'AGREGAR ESTE DISEÑO AL PEDIDO'}
+        </button>
+      </div>`;
+
+    // 2. SECCIÓN POSTRES
+    html += `<h3 style="color:var(--dorado); width:100%; max-width:480px; margin: 20px 0 15px 0; border-left:3px solid var(--rosa-pastel); padding-left:8px; font-size:16px;">POSTRES</h3>`;
+    menuPasteleria.postres.forEach(item => html += generarCardHtml(item, false));
+
+    // 3. SECCIÓN ESPECIALIDAD
+    html += `<h3 style="color:var(--dorado); width:100%; max-width:480px; margin: 20px 0 15px 0; border-left:3px solid var(--rosa-pastel); padding-left:8px; font-size:16px;">LA ESPECIALIDAD DE LA CASA</h3>`;
+    menuPasteleria.especialidad.forEach(item => html += generarCardHtml(item, false));
+
     container.innerHTML = html;
+    ajustarEstiloBotonCustom();
   }
 
-  function calcularPrecioCard(id, pBase) {
-    const tVal = document.getElementById(`size-${id}`).value;
-    const sVal = document.getElementById(`flavor-${id}`).value;
-    const nuevoTotal = pBase + preciosTamaño[tVal] + preciosSabor[sVal];
-    document.getElementById(`price-card-${id}`).innerText = `$${nuevoTotal.toFixed(2)}`;
+  function generarCardHtml(item, esPastel) {
+    const yaAgregado = cotizacion[item.id];
+    let selectoresHtml = "";
+    
+    if (esPastel) {
+      selectoresHtml = `
+        <label style="font-size:11px; color:var(--rosa-pastel); display:block; margin-top:5px;">Sabor de Bizcocho:</label>
+        <select class="config-selector" id="bisc-${item.id}">
+          <option value="Chocolate">Chocolate</option>
+          <option value="Vainilla">Vainilla</option>
+          <option value="Limón">Limón</option>
+          <option value="Zanahoria">Zanahoria</option>
+        </select>
 
-    // Si ya estaba en la cotización, actualizamos sus opciones en vivo
-    if (cotizacion[id]) {
-      cotizacion[id].tamaño = tVal;
-      cotizacion[id].sabor = sVal;
-      cotizacion[id].precioTotal = nuevoTotal;
-      actualizarBarra();
+        <label style="font-size:11px; color:var(--rosa-pastel); display:block; margin-top:5px;">Relleno:</label>
+        <select class="config-selector" id="rell-${item.id}">
+          <option value="Dulce de leche">Dulce de leche</option>
+          <option value="Crema de Oreo">Crema de Oreo</option>
+          <option value="Café">Café</option>
+          <option value="Nutella">Nutella</option>
+          <option value="Fresa">Fresa</option>
+          <option value="Maracuyá">Maracuyá</option>
+        </select>`;
+    }
+
+    return `
+      <div class="plato-card" onclick="document.getElementById('bg-image').src='${item.img}'">
+        <div class="img-container"><img src="${item.img}"></div>
+        <div class="plato-info">
+          <h4>${item.n}</h4>
+          <p>${item.desc}</p>
+          ${selectoresHtml}
+          <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
+            <span>$${item.pBase.toFixed(2)}</span>
+            <button class="btn-agregar ${yaAgregado ? 'selected' : ''}" id="btn-${item.id}" onclick="event.stopPropagation(); toggleProducto('${item.id}', '${item.n}', ${item.pBase}, ${esPastel})">
+              ${yaAgregado ? 'QUITAR' : 'SELECCIONAR'}
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function guardarDiseño() {
+    dulcePersonalizado.detalles = document.getElementById('custom-desc').value;
+    dulcePersonalizado.fotoUrl = document.getElementById('custom-photo').value;
+  }
+
+  function toggleCustom() {
+    dulcePersonalizado.activo = !dulcePersonalizado.activo;
+    guardarDiseño();
+    ajustarEstiloBotonCustom();
+    actualizarBarra();
+  }
+
+  function ajustarEstiloBotonCustom() {
+    const btn = document.getElementById('btn-custom-toggle');
+    if (!btn) return;
+    if (dulcePersonalizado.activo) {
+      btn.innerText = "QUITAR DISEÑO PERSONALIZADO";
+      btn.style.background = "#444";
+      btn.style.color = "var(--rosa-pastel)";
+    } else {
+      btn.innerText = "AGREGAR ESTE DISEÑO AL PEDIDO";
+      btn.style.background = "var(--rosa-pastel)";
+      btn.style.color = "black";
     }
   }
 
-  function toggleDulce(id, nombre, pBase) {
+  function toggleProducto(id, nombre, pBase, esPastel) {
     const btn = document.getElementById(`btn-${id}`);
     if (cotizacion[id]) {
       delete cotizacion[id];
       btn.innerText = "SELECCIONAR";
       btn.classList.remove('selected');
     } else {
-      const tVal = document.getElementById(`size-${id}`).value;
-      const sVal = document.getElementById(`flavor-${id}`).value;
-      const calcP = pBase + preciosTamaño[tVal] + preciosSabor[sVal];
-      
-      cotizacion[id] = { nombre: nombre, tamaño: tVal, sabor: sVal, precioTotal: calcP };
+      let bisc = esPastel ? document.getElementById(`bisc-${id}`).value : "N/A";
+      let rell = esPastel ? document.getElementById(`rell-${id}`).value : "N/A";
+      cotizacion[id] = { nombre: nombre, bizcocho: bisc, relleno: rell, precio: pBase, esPastel: esPastel };
       btn.innerText = "QUITAR";
       btn.classList.add('selected');
     }
@@ -383,13 +441,17 @@
   function actualizarBarra() {
     let total = 0, unidades = 0;
     for (let k in cotizacion) {
-      total += cotizacion[k].precioTotal;
+      total += cotizacion[k].precio;
       unidades++;
     }
+    if (dulcePersonalizado.activo) {
+      unidades++; // Suma el diseño a medida
+    }
+    
     const bar = document.getElementById('cart-bar');
-    if (unidades > 0 && vistaActual !== 'info' && vistaActual !== 'inicio' && vistaActual !== 'sabores') {
+    if (unidades > 0 && vistaActual === 'modelos') {
       bar.style.display = 'flex';
-      document.getElementById('cart-count').innerText = `${unidades} DULCE(S)`;
+      document.getElementById('cart-count').innerText = `${unidades} SELECCIÓN(ES)`;
       document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
     } else {
       bar.style.display = 'none';
@@ -399,14 +461,26 @@
   function abrirConfirmacion() {
     let resumen = "";
     let total = 0;
+    
     for (let k in cotizacion) {
-      resumen += `🎂 <b>${cotizacion[k].nombre}</b><br>`;
-      resumen += `• Tamaño: ${cotizacion[k].tamaño}<br>`;
-      resumen += `• Sabor: ${cotizacion[k].sabor.split(' (')[0]}<br>`;
-      resumen += `• Subtotal: $${cotizacion[k].precioTotal.toFixed(2)}<br><br>`;
-      total += cotizacion[k].precioTotal;
+      resumen += `• <b>${cotizacion[k].nombre}</b> - $${cotizacion[k].precio.toFixed(2)}<br>`;
+      if (cotizacion[k].esPastel) {
+        resumen += `&nbsp;&nbsp; Masa: ${cotizacion[k].bizcocho}<br>`;
+        resumen += `&nbsp;&nbsp; Relleno: ${cotizacion[k].relleno}<br>`;
+      }
+      total += cotizacion[k].precio;
     }
-    resumen += `<b>ESTIMADO TOTAL: $${total.toFixed(2)}</b>`;
+
+    if (dulcePersonalizado.activo) {
+      resumen += `<br>✨ <b>Dulce 100% Personalizado:</b><br>`;
+      resumen += `&nbsp;&nbsp; Idea: ${dulcePersonalizado.detalles || 'Sin descripción detallada'}<br>`;
+      if (dulcePersonalizado.fotoUrl) {
+        resumen += `&nbsp;&nbsp; 🖼️ Foto adjunta: Sí (Enlace incluido)<br>`;
+      }
+      resumen += `&nbsp;&nbsp; <i>Precio: Por cotizar en WhatsApp</i><br>`;
+    }
+    
+    resumen += `<br><b>TOTAL ESTIMADO: $${total.toFixed(2)}</b>`;
     document.getElementById('resumen-pedido').innerHTML = resumen;
     document.getElementById('modal-confirm').style.display = 'flex';
   }
@@ -416,24 +490,32 @@
   }
 
   function enviarWhatsApp() {
-    let t = 0, m = "*NUEVA COTIZACIÓN DE DULCE*%0A%0A";
-    for (let k in cotizacion) {
-      m += `🎂 *${cotizacion[k].nombre}*%0A`;
-      m += `📏 Tamaño: ${cotizacion[k].tamaño}%0A`;
-      m += `🍰 Sabor: ${cotizacion[k].sabor.split(' (')[0]}%0A`;
-      m += `💵 Est: $${cotizacion[k].precioTotal.toFixed(2)}%0A%0A`;
-      t += cotizacion[k].precioTotal;
-    }
-    m += `💰 *TOTAL ESTIMADO: $${t.toFixed(2)}*%0A%0A`;
-    m += `Hola! Me gustaría coordinar los detalles de personalización de mi pedido para esta cotización.`;
+    let t = 0, m = "*NUEVO PEDIDO - MERY CAKE*%0A%0A";
     
-    // Reemplaza con tu número de teléfono real
+    for (let k in cotizacion) {
+      m += `🎂 *${cotizacion[k].nombre}* - $${cotizacion[k].precio.toFixed(2)}%0A`;
+      if (cotizacion[k].esPastel) {
+        m += `  • Masa: ${cotizacion[k].bizcocho}%0A`;
+        m += `  • Relleno: ${cotizacion[k].relleno}%0A`;
+      }
+      t += cotizacion[k].precio;
+    }
+
+    if (dulcePersonalizado.activo) {
+      m += `%0A✨ *DULCE PERSONALIZADO PROPIO*%0A`;
+      m += `📝 Descripción: ${dulcePersonalizado.detalles}%0A`;
+      if (dulcePersonalizado.fotoUrl) {
+        m += `🖼️ Enlace de imagen: ${dulcePersonalizado.fotoUrl}%0A`;
+      }
+    }
+    
+    m += `%0A💰 *TOTAL PRE-COTIZADO: $${t.toFixed(2)}*`;
     window.open(`https://wa.me/50761431537?text=${m}`, '_blank');
     cerrarConfirmacion();
   }
 
   function irAModelos() {
-    cambiarVista('pasteles', document.querySelectorAll('.nav-btn')[1]);
+    cambiarVista('modelos', document.querySelectorAll('.nav-btn')[1]);
   }
 
   window.onload = () => cambiarVista('inicio', document.querySelectorAll('.nav-btn')[0]);
