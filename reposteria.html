@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Mery Cake - Pasteles y Postres</title>
 
-<!-- ======================================================= -->
-<!-- 1. ESTILOS VISUALES (CSS)                               -->
-<!-- ======================================================= -->
 <style>
   /* Paleta de colores globales */
   :root {
@@ -86,27 +83,22 @@
 </head>
 <body>
 
-  <!-- Contenedor del fondo -->
   <div id="background-container"><img id="bg-image" src=""></div>
 
-  <!-- Menú de navegación principal -->
   <div class="navbar">
     <button class="nav-btn active" onclick="cambiarVista('inicio', this)">Mery Cake</button>
     <button class="nav-btn" onclick="cambiarVista('modelos', this)">Modelos</button>
-    <button class="nav-btn" onclick="cambiarVista('info', this)">Pedidos</button>
+    <button class="nav-btn" onclick="cambiarVista('info', this)">Más de Nosotros</button>
   </div>
 
-  <!-- Espacio vacío que JavaScript llenará dinámicamente -->
   <div class="main-content" id="app-content"></div>
 
-  <!-- Barra de Cotización Flotante -->
   <div class="cart-floating" id="cart-bar" onclick="abrirConfirmacion()">
     <span id="cart-count">0 SELECCIONES</span>
     <span>REVISAR DETALLES</span>
     <span id="cart-total">$0.00</span>
   </div>
 
-  <!-- Ventana emergente de confirmación de WhatsApp -->
   <div id="modal-confirm">
     <div class="modal-content">
       <h2 style="color:var(--rosa-pastel); margin-bottom:15px;">Confirmación de Solicitud</h2>
@@ -118,22 +110,19 @@
     </div>
   </div>
 
-<!-- ======================================================= -->
-<!-- 2. LÓGICA Y DATOS (JAVASCRIPT)                          -->
-<!-- ======================================================= -->
 <script>
   let cotizacion = {};
   let vistaActual = 'inicio';
   let dulcePersonalizado = { activo: false, detalles: "", fotoUrl: "" };
 
-  // --- NOTA: AQUÍ SE CAMBIAN LAS IMÁGENES DE FONDO DE CADA PESTAÑA ---
+  // --- NOTA: NUEVAS IMÁGENES DE FONDO DE REPOSTERÍA FINALES ---
   const imagenesFondo = {
-    inicio: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000",
-    modelos: "https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=1000",
-    info: "https://images.unsplash.com/photo-1516685018646-549198525c1b?w=1000"
+    inicio: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000", // Pastel elegante oscuro
+    modelos: "https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=1000", // Macarons y texturas dulces
+    info: "https://images.unsplash.com/photo-1621983200764-01234c999bef?w=1000"     // Batido y cobertura de chocolate premium
   };
 
-  // --- NOTA: AQUÍ ESTÁ TU MENÚ DE PRODUCTOS (Cambia nombres, precios y fotos aquí) ---
+  // --- NOTA: AQUÍ ESTÁ TU MENÚ DE PRODUCTOS ---
   const menuPasteleria = {
     pasteles: [
       { id: "pas1", n: "Pastel de Cumpleaños Mediano", pBase: 30.00, img: "https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=600", desc: "Rendimiento aproximado de 20 a 25 porciones." },
@@ -171,7 +160,7 @@
         return;
     }
 
-    // BLOQUE B: PESTAÑA DE PEDIDOS (INFORMACIÓN)
+    // BLOQUE B: PESTAÑA ACTUALIZADA (MÁS DE NOSOTROS)
     if (vista === 'info') {
         container.innerHTML = `
           <div class="hero-box">
@@ -304,7 +293,7 @@
       total += cotizacion[k].precio;
     }
     if (dulcePersonalizado.activo) {
-      resumen += `<br>✨ <b>Dulce Personalizado Own:</b><br>&nbsp;&nbsp; Idea: ${dulcePersonalizado.detalles || 'Solo Imagen'}<br>`;
+      resumen += `<br>✨ <b>Dulce Personalizado:</b><br>&nbsp;&nbsp; Idea: ${dulcePersonalizado.detalles || 'Solo Imagen'}<br>`;
       if (dulcePersonalizado.fotoUrl) resumen += `&nbsp;&nbsp; 🖼️ Foto: Enlace Adjunto<br>`;
     }
     resumen += `<br><b>TOTAL ESTIMADO: $${total.toFixed(2)}</b>`;
