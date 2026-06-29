@@ -126,14 +126,14 @@
   let vistaActual = 'inicio';
   let dulcePersonalizado = { activo: false, detalles: "", fotoUrl: "" };
 
-  // --- NOTA: AQUÍ SE COLOCÓ LA NUEVA IMAGEN DE FONDO PARA 'info' ---
+  // --- CORREGIDO: Enlace exacto para el postre de chocolate premium con fresa ---
   const imagenesFondo = {
     inicio: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000", 
     modelos: "https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=1000", 
-    info: "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=1000" // Tu nueva imagen premium de postre de chocolate y fresa (image_cd05f9.jpg)
+    info: "https://images.unsplash.com/photo-1604152135912-04a022e23696?w=1000" // El volcán de chocolate elegante que querías
   };
 
-  // --- NOTA: MENÚ DE PRODUCTOS ---
+  // --- MENÚ DE PRODUCTOS ---
   const menuPasteleria = {
     pasteles: [
       { id: "pas1", n: "Pastel de Cumpleaños Mediano", pBase: 30.00, img: "https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=600", desc: "Rendimiento aproximado de 20 a 25 porciones." },
@@ -148,7 +148,7 @@
     ]
   };
 
-  // --- NOTA: CONTROL DE PESTAÑAS ---
+  // --- CONTROL DE PESTAÑAS ---
   function cambiarVista(vista, btn) {
     vistaActual = vista;
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -212,7 +212,7 @@
     ajustarEstiloBotonCustom();
   }
 
-  // --- NOTA: GENERADOR DE TARJETAS VISUALES ---
+  // --- GENERADOR DE TARJETAS VISUALES ---
   function generarCardHtml(item, esPastel) {
     const yaAgregado = cotizacion[item.id];
     let selectoresHtml = "";
@@ -245,7 +245,7 @@
       </div>`;
   }
 
-  // --- NOTA: MÉTODOS DE SELECCIÓN Y CARRITO ---
+  // --- MÉTODOS DE SELECCIÓN Y CARRITO ---
   function guardarDiseño() {
     dulcePersonalizado.detalles = document.getElementById('custom-desc').value;
     dulcePersonalizado.fotoUrl = document.getElementById('custom-photo').value;
