@@ -1,336 +1,268 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Mery Cake - Pasteles y Postres</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mery Cake Shop</title>
+  <style>
+    /* Estilos Generales */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
 
-<!-- ======================================================= -->
-<!-- 1. ESTILOS VISUALES (CSS)                               -->
-<!-- ======================================================= -->
-<style>
-  /* Paleta de colores globales */
-  :root {
-    --rosa-pastel: #ffb7b2;
-    --dorado: #e0a96d;
-    --oscuro-fondo: #121212;
-    --card-bg: rgba(30, 30, 30, 0.95);
-    --texto-secundario: #a0a0a0;
-  }
+    body {
+      background-color: #0d1117;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-image 0.5s ease-in-out;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
 
-  /* Reset básico para que se vea igual en todos los celulares */
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    /* Capa oscura para mejorar legibilidad del texto sobre el fondo */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(13, 17, 23, 0.75);
+      z-index: 1;
+    }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--oscuro-fondo);
-    color: white;
-    height: 100dvh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
+    header, main, footer {
+      position: relative;
+      z-index: 2;
+    }
 
-  /* Capa fija para la imagen de fondo */
-  #background-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-    background: #121212; display: flex; justify-content: center; align-items: center;
-  }
-  #bg-image { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.35) blur(1px); }
+    header {
+      background-color: rgba(22, 27, 34, 0.9);
+      padding: 15px;
+      text-align: center;
+      border-bottom: 2px solid #f687b3;
+    }
 
-  /* Menú de pestañas superior */
-  .navbar { background-color: #1a1a1a; padding: 15px 5px; display: flex; justify-content: space-around; border-bottom: 1px solid #333; z-index: 1000; }
-  .nav-btn { background: #252525; color: white; border: none; padding: 10px 16px; border-radius: 25px; font-weight: bold; font-size: 13px; }
-  .nav-btn.active { background: var(--rosa-pastel); color: black; }
+    header h1 {
+      color: #f687b3;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
 
-  /* Contenedor central donde cambia el contenido */
-  .main-content { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; align-items: center; -webkit-overflow-scrolling: touch; }
-  .categoria-titulo { color: var(--rosa-pastel); width: 100%; max-width: 480px; margin-bottom: 20px; font-size: 22px; }
+    main {
+      flex: 1;
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+    }
 
-  /* Caja estilo tarjeta flotante (Para Portada e Información) */
-  .hero-box { text-align: center; padding: 35px 20px; background: rgba(0,0,0,0.6); border-radius: 25px; backdrop-filter: blur(10px); max-width: 480px; border: 1px solid rgba(255,183,178,0.2); width: 100%; }
+    /* Contenedor Principal de Pantallas */
+    .screen {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
 
-  /* Tarjetas de Dulces individuales */
-  .plato-card { display: flex; align-items: center; width: 100%; max-width: 480px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); border-radius: 20px; border: 1px solid #333; }
-  .img-container { width: 85px; height: 85px; border-radius: 15px; overflow: hidden; margin-right: 15px; flex-shrink: 0; border: 2px solid var(--rosa-pastel); }
-  .img-container img { width: 100%; height: 100%; object-fit: cover; }
-  .plato-info { flex: 1; }
-  .plato-info h4 { font-size: 16px; margin-bottom: 4px; }
-  .plato-info p { color: var(--texto-secundario); font-size: 12px; margin-bottom: 5px; }
-  .plato-info span { color: var(--dorado); font-weight: bold; font-size: 16px; }
+    .screen.active {
+      display: block;
+    }
 
-  /* Listas desplegables (Sabores y Rellenos) */
-  .config-selector { background: #111; color: white; border: 1px solid #444; padding: 6px 10px; border-radius: 10px; font-size: 12px; margin-top: 5px; width: 100%; outline: none; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-  /* Botones de selección */
-  .btn-agregar { background: var(--rosa-pastel); color: black; border: none; padding: 10px 14px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 10px; }
-  .btn-agregar.selected { background: #444; color: var(--rosa-pastel); border: 1px solid var(--rosa-pastel); }
+    /* Tarjetas y Contenedores */
+    .card {
+      background-color: rgba(22, 27, 34, 0.85);
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-  /* Recuadro del Dulce Personalizado */
-  .custom-box { width: 100%; max-width: 480px; background: linear-gradient(135deg, #1f1414 0%, #121212 100%); border: 2px dashed var(--rosa-pastel); border-radius: 20px; padding: 20px; margin-bottom: 25px; text-align: center; }
-  .custom-input { width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #444; color: white; border-radius: 10px; margin-top: 8px; margin-bottom: 12px; font-family: inherit; font-size: 13px; }
+    h2 {
+      color: #f687b3;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
 
-  /* Barra inferior flotante de Cotización */
-  .cart-floating { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; background: var(--rosa-pastel); color: black; padding: 18px; border-radius: 50px; display: none; justify-content: space-between; align-items: center; font-weight: 800; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+    p {
+      color: #c9d1d9;
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
 
-  /* Ventana emergente (Modal de confirmación) */
-  #modal-confirm { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; display: none; justify-content: center; align-items: center; padding: 20px; }
-  .modal-content { background: #1a1a1a; width: 100%; max-width: 400px; padding: 25px; border-radius: 25px; border: 2px solid var(--rosa-pastel); text-align: center; }
-  .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
-  .btn-modal { flex: 1; padding: 14px; border-radius: 15px; border: none; font-weight: bold; }
-  .btn-si { background: var(--rosa-pastel); color: black; }
-  .btn-no { background: #333; color: white; }
-</style>
+    /* Botones de Navegación del Menú Inferior */
+    footer {
+      background-color: rgba(22, 27, 34, 0.95);
+      border-top: 1px solid #30363d;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .nav-tabs {
+      display: flex;
+      justify-content: space-around;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: #8b949e;
+      padding: 15px 10px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn.active {
+      color: #f687b3;
+      border-top: 3px solid #f687b3;
+      background-color: rgba(246, 135, 179, 0.05);
+    }
+
+    /* Grid de Modelos de Dulces */
+    .grid-modelos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .modelo-item {
+      background-color: rgba(33, 38, 45, 0.9);
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .modelo-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .modelo-item span {
+      font-size: 14px;
+      font-weight: bold;
+      color: #e6edf3;
+    }
+
+    /* Margen inferior para que el contenido no tape los botones */
+    .phantom-space {
+      height: 70px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Contenedor del fondo -->
-  <div id="background-container"><img id="bg-image" src=""></div>
+  <div class="overlay"></div>
 
-  <!-- Menú de navegación principal -->
-  <div class="navbar">
-    <button class="nav-btn active" onclick="cambiarVista('inicio', this)">Mery Cake</button>
-    <button class="nav-btn" onclick="cambiarVista('modelos', this)">Modelos</button>
-    <button class="nav-btn" onclick="cambiarVista('info', this)">Más de Nosotros</button>
-  </div>
+  <header>
+    <h1>Mery Cake Shop</h1>
+  </header>
 
-  <!-- Espacio vacío que JavaScript llenará dinámicamente -->
-  <div class="main-content" id="app-content"></div>
-
-  <!-- Barra de Cotización Flotante -->
-  <div class="cart-floating" id="cart-bar" onclick="abrirConfirmacion()">
-    <span id="cart-count">0 SELECCIONES</span>
-    <span>REVISAR DETALLES</span>
-    <span id="cart-total">$0.00</span>
-  </div>
-
-  <!-- Ventana emergente de confirmación de WhatsApp -->
-  <div id="modal-confirm">
-    <div class="modal-content">
-      <h2 style="color:var(--rosa-pastel); margin-bottom:15px;">Confirmación de Solicitud</h2>
-      <div id="resumen-pedido" style="text-align:left; margin-bottom:20px; font-size:14px; color:#ccc; line-height: 1.5;"></div>
-      <div class="modal-btns">
-        <button class="btn-modal btn-no" onclick="cerrarConfirmacion()">MODIFICAR</button>
-        <button class="btn-modal btn-si" onclick="enviarWhatsApp()">ENVIAR A WHATSAPP</button>
+  <main>
+    <!-- PANTALLA 1: INICIO -->
+    <section id="screen-inicio" class="screen active">
+      <div class="card">
+        <h2>¡Bienvenidos!</h2>
+        <p>Creamos los dulces más deliciosos y personalizados para tus momentos especiales. Explora nuestros modelos o solicita más información directamente con nosotros.</p>
       </div>
-    </div>
-  </div>
+    </section>
 
-<!-- ======================================================= -->
-<!-- 2. LÓGICA Y DATOS (JAVASCRIPT)                          -->
-<!-- ======================================================= -->
-<script>
-  let cotizacion = {};
-  let vistaActual = 'inicio';
-  let dulcePersonalizado = { activo: false, detalles: "", fotoUrl: "" };
-
-  // --- CORREGIDO: Enlace exacto para el postre de chocolate premium con fresa ---
-  const imagenesFondo = {
-    inicio: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000", 
-    modelos: "https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=1000", 
-    info: "https://images.unsplash.com/photo-1604152135912-04a022e23696?w=1000" // El volcán de chocolate elegante que querías
-  };
-
-  // --- MENÚ DE PRODUCTOS ---
-  const menuPasteleria = {
-    pasteles: [
-      { id: "pas1", n: "Pastel de Cumpleaños Mediano", pBase: 30.00, img: "https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=600", desc: "Rendimiento aproximado de 20 a 25 porciones." },
-      { id: "pas2", n: "Pastel de Cumpleaños Familiar", pBase: 45.00, img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600", desc: "Rendimiento aproximado de 35 a 40 porciones." }
-    ],
-    postres: [
-      { id: "pos1", n: "Mini Dulces Variados (Docena)", pBase: 12.00, img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600", desc: "Caja de 12 unidades surtidas ideales para mesas de dulces." },
-      { id: "pos2", n: "Cupcakes Decorados (6 unidades)", pBase: 10.00, img: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=600", desc: "Con cobertura cremosa combinada a juego." }
-    ],
-    especialidad: [
-      { id: "esp1", n: "Tres Leches Mery Cake", pBase: 18.00, img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?w=600", desc: "Nuestra receta ultra húmeda especial de la casa." }
-    ]
-  };
-
-  // --- CONTROL DE PESTAÑAS ---
-  function cambiarVista(vista, btn) {
-    vistaActual = vista;
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    const container = document.getElementById('app-content');
-    document.getElementById('bg-image').src = imagenesFondo[vista];
-    actualizarBarra();
-
-    // BLOQUE A: PORTADA DE INICIO
-    if (vista === 'inicio') {
-        container.innerHTML = `
-          <div class="hero-box">
-            <h1 style="font-size:32px; color:var(--rosa-pastel); font-weight:800; margin-bottom:5px;">Mery Cake</h1>
-            <p style="font-size:16px; font-weight:bold; color:white; margin-bottom:15px;">Pasteles y Postres</p>
-            <p style="color:#eee; font-style:italic; font-size:14px; margin-bottom:5px;">"Los dulces son momentos"</p>
-            <p style="color:#ccc; font-size:13px; margin-bottom:25px;">Encuentra variedad de postres y pasteles 100% personalizados y de muchos sabores.</p>
-            <button class="nav-btn active" style="width:100%; padding:14px;" onclick="irAModelos()">VER MODELOS</button>
-          </div>`;
-        return;
-    }
-
-    // BLOQUE B: PESTAÑA MÁS DE NOSOTROS
-    if (vista === 'info') {
-        container.innerHTML = `
-          <div class="hero-box">
-            <h2 style="color:var(--rosa-pastel); margin-bottom:15px; font-size:20px;">Información de Pedidos</h2>
-            <p style="margin-bottom:12px; font-size:14px;">📍 Ubicación: Sajalices, Panamá Oeste</p>
-            <p style="margin-bottom:12px; font-size:14px;">💬 Los pedidos se coordinan y procesan de forma personalizada mediante atención directa.</p>
-            <p style="font-size:12px; color:var(--dorado); margin-top:20px;">¡Prepara tu cotización interactiva en la pestaña de modelos!</p>
-          </div>`;
-        return;
-    }
-
-    // BLOQUE C: PESTAÑA DE MODELOS INTERACTIVOS
-    let html = `<h2 class="categoria-titulo">Selecciona a tu gusto</h2>`;
-
-    // Renderizar Sección 1: Pasteles
-    html += `<h3 style="color:var(--dorado); width:100%; max-width:480px; margin: 10px 0 15px 0; border-left:3px solid var(--rosa-pastel); padding-left:8px; font-size:16px;">PASTELES</h3>`;
-    menuPasteleria.pasteles.forEach(item => html += generarCardHtml(item, true));
-
-    // Renderizar Formulario de Dulce Personalizado
-    html += `
-      <div class="custom-box">
-        <h4 style="color:var(--rosa-pastel); font-size:15px; margin-bottom:6px;">✨ ¿Deseas un Dulce 100% Personalizado?</h4>
-        <p style="font-size:12px; color:var(--texto-secundario); margin-bottom:10px;">Cuéntanos tu idea o pega el enlace de tu foto (de ImgBB) aquí abajo:</p>
-        <textarea class="custom-input" id="custom-desc" rows="2" placeholder="Ej: Quiero un dulce con diseño de astronauta..." oninput="guardarDiseño()">${dulcePersonalizado.detalles}</textarea>
-        <input class="custom-input" type="url" id="custom-photo" placeholder="Pegar enlace de imagen de ImgBB (https://...)" value="${dulcePersonalizado.fotoUrl}" oninput="guardarDiseño()">
-        <button class="btn-agregar" id="btn-custom-toggle" style="margin:5px 0 0 0; width:100%;" onclick="toggleCustom()"></button>
-      </div>`;
-
-    // Renderizar Sección 2: Postres
-    html += `<h3 style="color:var(--dorado); width:100%; max-width:480px; margin: 20px 0 15px 0; border-left:3px solid var(--rosa-pastel); padding-left:8px; font-size:16px;">POSTRES</h3>`;
-    menuPasteleria.postres.forEach(item => html += generarCardHtml(item, false));
-
-    // Renderizar Sección 3: Especialidades
-    html += `<h3 style="color:var(--dorado); width:100%; max-width:480px; margin: 20px 0 15px 0; border-left:3px solid var(--rosa-pastel); padding-left:8px; font-size:16px;">LA ESPECIALIDAD DE LA CASA</h3>`;
-    menuPasteleria.especialidad.forEach(item => html += generarCardHtml(item, false));
-
-    container.innerHTML = html;
-    ajustarEstiloBotonCustom();
-  }
-
-  // --- GENERADOR DE TARJETAS VISUALES ---
-  function generarCardHtml(item, esPastel) {
-    const yaAgregado = cotizacion[item.id];
-    let selectoresHtml = "";
-    
-    if (esPastel) {
-      selectoresHtml = `
-        <label style="font-size:11px; color:var(--rosa-pastel); display:block; margin-top:5px;">Sabor de Bizcocho:</label>
-        <select class="config-selector" id="bisc-${item.id}">
-          <option value="Chocolate">Chocolate</option><option value="Vainilla">Vainilla</option><option value="Limón">Limón</option><option value="Zanahoria">Zanahoria</option>
-        </select>
-        <label style="font-size:11px; color:var(--rosa-pastel); display:block; margin-top:5px;">Relleno:</label>
-        <select class="config-selector" id="rell-${item.id}">
-          <option value="Dulce de leche">Dulce de leche</option><option value="Crema de Oreo">Crema de Oreo</option><option value="Café">Café</option><option value="Nutella">Nutella</option><option value="Fresa">Fresa</option><option value="Maracuyá">Maracuyá</option>
-        </select>`;
-    }
-
-    return `
-      <div class="plato-card" onclick="document.getElementById('bg-image').src='${item.img}'">
-        <div class="img-container"><img src="${item.img}"></div>
-        <div class="plato-info">
-          <h4>${item.n}</h4><p>${item.desc}</p>
-          ${selectoresHtml}
-          <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
-            <span>$${item.pBase.toFixed(2)}</span>
-            <button class="btn-agregar ${yaAgregado ? 'selected' : ''}" id="btn-${item.id}" onclick="event.stopPropagation(); toggleProducto('${item.id}', '${item.n}', ${item.pBase}, ${esPastel})">
-              ${yaAgregado ? 'QUITAR' : 'SELECCIONAR'}
-            </button>
+    <!-- PANTALLA 2: MODELOS -->
+    <section id="screen-modelos" class="screen">
+      <div class="card">
+        <h2>Nuestros Modelos</h2>
+        <p>Echa un vistazo a algunas de nuestras creaciones favoritas:</p>
+        <div class="grid-modelos">
+          <div class="modelo-item">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400" alt="Dulce 1">
+            <span>Pastel de Bodas</span>
+          </div>
+          <div class="modelo-item">
+            <img src="https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=400" alt="Dulce 2">
+            <span>Pastel Infantil</span>
           </div>
         </div>
-      </div>`;
-  }
+      </div>
+    </section>
 
-  // --- MÉTODOS DE SELECCIÓN Y CARRITO ---
-  function guardarDiseño() {
-    dulcePersonalizado.detalles = document.getElementById('custom-desc').value;
-    dulcePersonalizado.fotoUrl = document.getElementById('custom-photo').value;
-  }
+    <!-- PANTALLA 3: MAS INFO -->
+    <section id="screen-info" class="screen">
+      <div class="card">
+        <h2>Más Información</h2>
+        <p>¿Tienes un diseño en mente o deseas cotizar un tamaño específico? Escríbenos directamente y con gusto te atenderemos.</p>
+      </div>
+    </section>
 
-  function toggleCustom() {
-    dulcePersonalizado.activo = !dulcePersonalizado.activo;
-    guardarDiseño(); ajustarEstiloBotonCustom(); actualizarBarra();
-  }
+    <div class="phantom-space"></div>
+  </main>
 
-  function ajustarEstiloBotonCustom() {
-    const btn = document.getElementById('btn-custom-toggle');
-    if (!btn) return;
-    btn.innerText = dulcePersonalizado.activo ? "QUITAR DISEÑO PERSONALIZADO" : "AGREGAR ESTE DISEÑO AL PEDIDO";
-    btn.style.background = dulcePersonalizado.activo ? "#444" : "var(--rosa-pastel)";
-    btn.style.color = dulcePersonalizado.activo ? "var(--rosa-pastel)" : "black";
-  }
+  <footer>
+    <nav class="nav-tabs">
+      <button class="nav-btn active" onclick="cambiarPantalla('inicio')">Inicio</button>
+      <button class="nav-btn" onclick="cambiarPantalla('modelos')">Modelos</button>
+      <button class="nav-btn" onclick="cambiarPantalla('info')">Más Info</button>
+    </nav>
+  </footer>
 
-  function toggleProducto(id, nombre, pBase, esPastel) {
-    const btn = document.getElementById(`btn-${id}`);
-    if (cotizacion[id]) {
-      delete cotizacion[id];
-      btn.innerText = "SELECCIONAR"; btn.classList.remove('selected');
-    } else {
-      let bisc = esPastel ? document.getElementById(`bisc-${id}`).value : "N/A";
-      let rell = esPastel ? document.getElementById(`rell-${id}`).value : "N/A";
-      cotizacion[id] = { nombre: nombre, bizcocho: bisc, relleno: rell, precio: pBase, esPastel: esPastel };
-      btn.innerText = "QUITAR"; btn.classList.add('selected');
-    }
-    actualizarBarra();
-  }
+  <script>
+    // --- CONTROL DE FONDOS (GESTIÓN DE IMÁGENES) ---
+    // Aquí puedes cambiar de forma independiente las fotos de fondo de cada sección.
+    const imagenesFondo = {
+      inicio: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000",
+      modelos: "https://images.unsplash.com/photo-1535141192574-5d4897c13636?w=1000",
+      info: "MAS INFO.jpg" // Actualizado con tu archivo de GitHub
+    };
 
-  function actualizarBarra() {
-    let total = 0, unidades = 0;
-    for (let k in cotizacion) { total += cotizacion[k].precio; unidades++; }
-    if (dulcePersonalizado.activo) { unidades++; }
-    
-    const bar = document.getElementById('cart-bar');
-    if (unidades > 0 && vistaActual === 'modelos') {
-      bar.style.display = 'flex';
-      document.getElementById('cart-count').innerText = `${unidades} SELECCIÓN(ES)`;
-      document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
-    } else {
-      bar.style.display = 'none';
-    }
-  }
+    // Función para manejar la navegación y el cambio dinámico de fondos
+    function cambiarPantalla(pantallaId) {
+      // 1. Quitar la clase activa de todas las pantallas y botones
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-  function abrirConfirmacion() {
-    let resumen = "", total = 0;
-    for (let k in cotizacion) {
-      resumen += `• <b>${cotizacion[k].nombre}</b> - $${cotizacion[k].precio.toFixed(2)}<br>`;
-      if (cotizacion[k].esPastel) {
-        resumen += `&nbsp;&nbsp; Masa: ${cotizacion[k].bizcocho} | Relleno: ${cotizacion[k].relleno}<br>`;
+      // 2. Activar la pantalla seleccionada
+      const pantallaActiva = document.getElementById(`screen-${pantallaId}`);
+      if (pantallaActiva) {
+        pantallaActiva.classList.add('active');
       }
-      total += cotizacion[k].precio;
-    }
-    if (dulcePersonalizado.activo) {
-      resumen += `<br>✨ <b>Dulce Personalizado:</b><br>&nbsp;&nbsp; Idea: ${dulcePersonalizado.detalles || 'Solo Imagen'}<br>`;
-      if (dulcePersonalizado.fotoUrl) resumen += `&nbsp;&nbsp; 🖼️ Foto: Enlace Adjunto<br>`;
-    }
-    resumen += `<br><b>TOTAL ESTIMADO: $${total.toFixed(2)}</b>`;
-    document.getElementById('resumen-pedido').innerHTML = resumen;
-    document.getElementById('modal-confirm').style.display = 'flex';
-  }
 
-  function cerrarConfirmacion() { document.getElementById('modal-confirm').style.display = 'none'; }
+      // 3. Activar el botón correspondiente en el menú inferior
+      const botonActivo = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.textContent.toLowerCase().includes(pantallaId === 'info' ? 'info' : pantallaId));
+      if (botonActivo) {
+        botonActivo.classList.add('active');
+      }
 
-  function enviarWhatsApp() {
-    let t = 0, m = "*NUEVO PEDIDO - MERY CAKE*%0A%0A";
-    for (let k in cotizacion) {
-      m += `🎂 *${cotizacion[k].nombre}* - $${cotizacion[k].precio.toFixed(2)}%0A`;
-      if (cotizacion[k].esPastel) m += `  • Masa: ${cotizacion[k].bizcocho} | Relleno: ${cotizacion[k].relleno}%0A`;
-      t += cotizacion[k].precio;
+      // 4. Cambiar el fondo del body dinámicamente usando la configuración
+      if (imagenesFondo[pantallaId]) {
+        document.body.style.backgroundImage = `url('${imagenesFondo[pantallaId]}')`;
+      }
     }
-    if (dulcePersonalizado.activo) {
-      m += `%0A✨ *DULCE PERSONALIZADO*%0A📝 Desc: ${dulcePersonalizado.detalles}%0A`;
-      if (dulcePersonalizado.fotoUrl) m += `🖼️ Link: ${dulcePersonalizado.fotoUrl}%0A`;
-    }
-    m += `%0A💰 *TOTAL PRE-COTIZADO: $${t.toFixed(2)}*`;
-    window.open(`https://wa.me/50761431537?text=${m}`, '_blank');
-    cerrarConfirmacion();
-  }
 
-  function irAModelos() { cambiarVista('modelos', document.querySelectorAll('.nav-btn')[1]); }
-  window.onload = () => cambiarVista('inicio', document.querySelectorAll('.nav-btn')[0]);
-</script>
+    // Inicializar el fondo de la pantalla de inicio al cargar la página
+    window.onload = function() {
+      cambiarPantalla('inicio');
+    };
+  </script>
 </body>
 </html>
