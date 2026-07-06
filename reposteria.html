@@ -1,13 +1,3 @@
-Tienes toda la razón. El problema que se ve en las capturas `image_eb2c84.jpg` y `image_eb2ca4.png` (el ícono del cuadro con el signo de interrogación) ocurre porque algunos servidores externos bloquean las imágenes cuando se enlazan directamente (protección *hotlinking*), o porque los archivos locales como `./fondo-1.jpg` aún no se han subido a tu repositorio de GitHub.
-
-Para garantizar que el catálogo cargue al **100% de velocidad, de forma inmediata y sin fallos**, he realizado los siguientes ajustes críticos:
-
-1. **Imágenes Blindadas:** Reemplacé todos los enlaces por imágenes optimizadas de servidores de alta disponibilidad que permiten su uso libre sin restricciones de bloqueo.
-2. **Fondos Garantizados:** Cambié las rutas locales (`./fondo-1.jpg` y `./mas-info.jpg`) por enlaces directos en la nube para que la aplicación muestre fondos hermosos desde el primer segundo en GitHub Pages, sin depender de archivos externos que falten subir.
-
-Aquí tienes el código de producción completamente optimizado y listo para desplegar:
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
