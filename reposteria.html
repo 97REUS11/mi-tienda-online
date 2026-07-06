@@ -60,7 +60,7 @@
   .btn-agregar { background: var(--rosa-pastel); color: black; border: none; padding: 10px 14px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 10px; cursor: pointer; }
   .btn-agregar.selected { background: #444; color: var(--rosa-pastel); border: 1px solid var(--rosa-pastel); }
 
-  /* Estilos del contenedor Personalizar idénticos a la captura image_d8c4bc.png */
+  /* Estilos del contenedor Personalizar idénticos a la captura */
   .custom-box { width: 100%; max-width: 480px; background: rgba(18, 18, 18, 0.8); border: 2px dashed var(--rosa-pastel); border-radius: 25px; padding: 25px; text-align: center; backdrop-filter: blur(10px); }
   .custom-input { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #444; color: white; border-radius: 12px; margin-top: 8px; margin-bottom: 12px; font-family: inherit; font-size: 13px; outline: none; }
   
@@ -81,7 +81,7 @@
 
   <div id="background-container"><img id="bg-image" src=""></div>
 
-  <!-- Navbar de 4 Opciones Actualizada -->
+  <!-- Navbar de 4 Opciones -->
   <div class="navbar">
     <button class="nav-btn active" onclick="cambiarVista('inicio', this)">Mery Cake</button>
     <button class="nav-btn" onclick="cambiarVista('modelos', this)">Modelos</button>
@@ -115,7 +115,7 @@
   let cotizacion = {};
   let vistaActual = 'inicio';
   
-  // Estado inicial del dulce 100% personalizado
+  // Estado del dulce personalizado
   let dulcePersonalizado = {
     activo: false,
     detalles: "",
@@ -128,7 +128,7 @@
     precioTotal: 0.00
   };
 
-  // Fechas ocupadas/llenas (Formato YYYY-MM-DD) como ejemplo
+  // Fechas ocupadas/llenas de ejemplo (Formato YYYY-MM-DD)
   const fechasLlenas = ["2026-07-05"]; 
 
   const imagenesFondo = {
@@ -192,7 +192,6 @@
         return;
     }
 
-    // Nueva Pestaña Personalizar con la Interfaz de la Captura
     if (vista === 'personalizar') {
         container.innerHTML = `
           <div class="custom-box">
@@ -201,18 +200,17 @@
             
             <textarea class="custom-input" id="custom-desc" rows="3" placeholder="Ej: Quiero un dulce con diseño de astronauta..." oninput="guardarEstadoCustom()">${dulcePersonalizado.detalles}</textarea>
             
-            <!-- Opción 1: Subir Archivo Directo -->
+            <!-- Opción 1: Subir Archivo con carga automática a ImgBB -->
             <div class="file-zone" id="drop-zone">
               <span id="file-label" style="font-size:12px; color:var(--dorado); font-weight:bold;">
-                ${dulcePersonalizado.fotoArchivoNombre || "📁 Toca aquí para subir una Foto Directa"}
+                ${dulcePersonalizado.fotoArchivoNombre ? `✅ ${dulcePersonalizado.fotoArchivoNombre}` : "📁 Toca aquí para subir una Foto Directa"}
               </span>
               <input type="file" id="custom-file" accept="image/*" onchange="procesarArchivoImagen(this)">
             </div>
 
-            <!-- Opción 2: Pegar Link -->
+            <!-- Opción 2: Enlace Manual -->
             <input class="custom-input" type="url" id="custom-photo" placeholder="O pega el enlace de tu imagen aquí (https://...)" value="${dulcePersonalizado.fotoUrl}" oninput="guardarEstadoCustom()">
             
-            <!-- selectores de configuración de masa y rellenos -->
             <label style="font-size:12px; color:var(--rosa-pastel); display:block; text-align:left; margin-top:8px; font-weight:bold;">Tamaño del Dulce:</label>
             <select class="config-selector" id="custom-size" onchange="guardarEstadoCustom()">
               <option value="mediano" ${dulcePersonalizado.tamaño === 'mediano' ? 'selected' : ''}>Mediano ($35.00)</option>
@@ -235,7 +233,6 @@
               <option value="Nutella" ${dulcePersonalizado.relleno === 'Nutella' ? 'selected' : ''}>Nutella</option>
             </select>
 
-            <!-- Calendario con validación inteligente -->
             <label style="font-size:12px; color:var(--rosa-pastel); display:block; text-align:left; margin-top:12px; font-weight:bold;">Fecha de Entrega (Mínimo 5 días de anticipación):</label>
             <input type="date" class="custom-input" id="custom-date" value="${dulcePersonalizado.fechaEntrega}" onchange="validarFechaCalendario(this)">
 
@@ -282,14 +279,13 @@
       </div>`;
   }
 
-  // --- LOGICA DE CONTROL DE CALENDARIO ---
+  // --- CONTROL INTELIGENTE DE FECHAS ---
   function configurarMinimoCalendario() {
     const dateInput = document.getElementById('custom-date');
     if (!dateInput) return;
     
-    // Tomando como base estricta la fecha actual: 29 de Junio de 2026
-    let hoy = new Date(2026, 5, 29); 
-    hoy.setDate(hoy.getDate() + 5); // Sumar 5 días mínimos requeridos (Llegando al 4 de Julio)
+    let hoy = new Date(); 
+    hoy.setDate(hoy.getDate() + 5); 
     
     let yyyy = hoy.getFullYear();
     let mm = String(hoy.getMonth() + 1).padStart(2, '0');
@@ -302,7 +298,7 @@
     if (!input.value) return;
     
     if (fechasLlenas.includes(input.value)) {
-      alert("Lo sentimos, no se puede solicitar este día ya que tenemos agendado un dulce complejo corporativo. Por favor elija la siguiente fecha disponible.");
+      alert("Lo sentimos, no se puede solicitar este día ya que tenemos agendado un dulce ya. Por favor elija el siguiente día disponible.");
       input.value = "";
       dulcePersonalizado.fechaEntrega = "";
     } else {
@@ -311,17 +307,41 @@
     guardarEstadoCustom();
   }
 
-  // --- PROCESAMIENTO DE ARCHIVOS ---
+  // --- PROCESAMIENTO AUTOMÁTICO DE ARCHIVO DE GALERÍA (ImgBB) ---
   function procesarArchivoImagen(input) {
     const file = input.files[0];
     if (!file) return;
     
-    dulcePersonalizado.fotoArchivoNombre = file.name;
-    document.getElementById('file-label').innerText = `✅ ${file.name}`;
-    guardarEstadoCustom();
+    const label = document.getElementById('file-label');
+    label.innerText = "⏳ Subiendo imagen...";
+    
+    const formData = new FormData();
+    formData.append("image", file);
+    
+    fetch("https://api.imgbb.com/1/upload?key=6f73db2f2eb60b64d0bc793be81541bc", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data.success) {
+        dulcePersonalizado.fotoUrl = data.data.url;
+        dulcePersonalizado.fotoArchivoNombre = file.name;
+        label.innerText = `✅ ¡Imagen Lista para Enviar!`;
+        if(document.getElementById('custom-photo')) {
+          document.getElementById('custom-photo').value = data.data.url;
+        }
+      } else {
+        label.innerText = "❌ Error al cargar. Intenta de nuevo.";
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      label.innerText = "❌ Error de conexión al subir.";
+    });
   }
 
-  // --- CALCULOS Y LOGICA DE PERSONALIZACION ---
+  // --- SISTEMA DE COTIZACIONES ---
   function guardarEstadoCustom() {
     dulcePersonalizado.detalles = document.getElementById('custom-desc').value;
     dulcePersonalizado.fotoUrl = document.getElementById('custom-photo').value;
@@ -397,8 +417,11 @@
       resumen += `&nbsp;&nbsp; Tamaño: ${dulcePersonalizado.tamaño.toUpperCase()}<br>`;
       resumen += `&nbsp;&nbsp; Masa: ${dulcePersonalizado.bizcocho} | Relleno: ${dulcePersonalizado.relleno}<br>`;
       resumen += `&nbsp;&nbsp; Idea: ${dulcePersonalizado.detalles || 'Solo Imagen'}<br>`;
-      if (dulcePersonalizado.fotoArchivoNombre) resumen += `&nbsp;&nbsp; 📁 Foto Subida: ${dulcePersonalizado.fotoArchivoNombre}<br>`;
-      if (dulcePersonalizado.fotoUrl) resumen += `&nbsp;&nbsp; 🖼️ Link Adjunto<br>`;
+      if (dulcePersonalizado.fotoUrl) {
+        resumen += `&nbsp;&nbsp; 🖼️ Link de Foto generado correctamente.<br>`;
+      } else if (dulcePersonalizado.fotoArchivoNombre) {
+        resumen += `&nbsp;&nbsp; ⏳ Esperando que termine de cargar la foto...<br>`;
+      }
       resumen += `&nbsp;&nbsp; 📅 Fecha: ${dulcePersonalizado.fechaEntrega || 'Por definir por WhatsApp'}<br>`;
       total += dulcePersonalizado.precioTotal;
     }
@@ -422,8 +445,13 @@
       m += `📐 Tamaño: ${dulcePersonalizado.tamaño.toUpperCase()}%0A`;
       m += `🍞 Masa: ${dulcePersonalizado.bizcocho} | 🍯 Relleno: ${dulcePersonalizado.relleno}%0A`;
       m += `📝 Descripción: ${dulcePersonalizado.detalles || 'No especificada'}%0A`;
-      if (dulcePersonalizado.fotoArchivoNombre) m += `📁 Archivo adjuntado en cliente: ${dulcePersonalizado.fotoArchivoNombre}%0A`;
-      if (dulcePersonalizado.fotoUrl) m += `🔗 Link del diseño: ${dulcePersonalizado.fotoUrl}%0A`;
+      
+      if (dulcePersonalizado.fotoUrl) {
+        m += `🔗 Link del diseño cargado: ${dulcePersonalizado.fotoUrl}%0A`;
+      } else if (dulcePersonalizado.fotoArchivoNombre) {
+        m += `⚠️ El cliente seleccionó la imagen pero no esperó a que se subiera a internet.%0A`;
+      }
+      
       m += `📅 Fecha Solicitada: ${dulcePersonalizado.fechaEntrega || 'A convenir'}%0A`;
       t += dulcePersonalizado.precioTotal;
     }
