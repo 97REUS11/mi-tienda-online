@@ -236,6 +236,12 @@
     position: relative; 
     flex-shrink: 0; 
     background: #222; 
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .carousel-item:active {
+    transform: scale(0.96);
   }
   
   .carousel-item img { width: 100%; height: 100%; object-fit: cover; }
@@ -261,6 +267,42 @@
   }
   .btn-prev { left: -5px; }
   .btn-next { right: -5px; }
+
+  /* Modal de Zoom de Imagen */
+  #modal-zoom {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 4000;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+  }
+
+  #modal-zoom img {
+    max-width: 90%;
+    max-height: 75vh;
+    border-radius: 20px;
+    border: 2px solid var(--rosa-pastel);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    object-fit: contain;
+  }
+
+  #zoom-caption {
+    margin-top: 15px;
+    color: var(--rosa-pastel);
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  #zoom-hint {
+    margin-top: 8px;
+    color: var(--texto-secundario);
+    font-size: 12px;
+  }
 
   .cart-floating { 
     position: fixed; 
@@ -315,6 +357,13 @@
 
   <!-- Contenedor Principal Dinámico -->
   <div class="main-content" id="app-content"></div>
+
+  <!-- Modal para Agrandar Imagen -->
+  <div id="modal-zoom" onclick="cerrarZoom()">
+    <img id="zoom-img" src="" alt="Diseño ampliado">
+    <div id="zoom-caption"></div>
+    <div id="zoom-hint">Toca en cualquier lugar para cerrar</div>
+  </div>
 
   <!-- Carrito Flotante -->
   <div class="cart-floating" id="cart-bar" onclick="abrirConfirmacion()">
@@ -441,7 +490,7 @@
         let carruselItemsHtml = "";
         dulcesHechosGaleria.forEach(foto => {
           carruselItemsHtml += `
-            <div class="carousel-item">
+            <div class="carousel-item" onclick="abrirZoom('${foto.img}', '${foto.n}')">
               <img src="${obtenerRutaLimpia(foto.img)}" alt="${foto.n}" loading="lazy">
               <span>${foto.n}</span>
             </div>`;
@@ -449,7 +498,7 @@
 
         container.innerHTML = `
           <div class="carousel-wrapper">
-            <div class="carousel-title">✨ Inspiración: Diseños Personalizados Ya Creados</div>
+            <div class="carousel-title">✨ Inspiración: Diseños Personalizados (Toca para agrandar)</div>
             <button class="carousel-nav-btn btn-prev" onclick="moverCarrusel(-1)">❮</button>
             <div class="carousel-container" id="galeria-carrusel">
               ${carruselItemsHtml}
@@ -501,6 +550,17 @@
     }
   }
 
+  /* Funciones para visualizar las imágenes en grande */
+  function abrirZoom(urlImg, titulo) {
+    document.getElementById('zoom-img').src = obtenerRutaLimpia(urlImg);
+    document.getElementById('zoom-caption').innerText = titulo;
+    document.getElementById('modal-zoom').style.display = 'flex';
+  }
+
+  function cerrarZoom() {
+    document.getElementById('modal-zoom').style.display = 'none';
+  }
+
   function generarCardHtml(item, esPastel) {
     const yaAgregado = cotizacion[item.id];
     let selectoresHtml = "";
@@ -519,7 +579,9 @@
 
     return `
       <div class="plato-card">
-        <div class="img-container"><img src="${obtenerRutaLimpia(item.img)}" loading="lazy"></div>
+        <div class="img-container" onclick="abrirZoom('${item.img}', '${item.n}')" style="cursor:pointer;">
+          <img src="${obtenerRutaLimpia(item.img)}" loading="lazy">
+        </div>
         <div class="plato-info">
           <h4>${item.n}</h4><p>${item.desc}</p>
           ${selectoresHtml}
@@ -667,7 +729,13 @@
     document.getElementById('modal-confirm').style.display = 'flex';
   }
 
-  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') cerrarConfirmacion(); });
+  document.addEventListener('keydown', (e) => { 
+    if(e.key === 'Escape') {
+      cerrarConfirmacion();
+      cerrarZoom();
+    } 
+  });
+
   function cerrarConfirmacion() { document.getElementById('modal-confirm').style.display = 'none'; }
 
   function enviarWhatsApp() {
