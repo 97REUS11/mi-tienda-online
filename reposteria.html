@@ -229,7 +229,7 @@
     { n: "Spiderman", img: "./personalizado-spiderman.jpeg" }
   ];
 
-  /* Orden corregido: Grande (Familiar) -> Mediano -> Chico (Pequeño) */
+  /* Menú de Pasteles y Postres actualizados según los nombres de tus archivos */
   const menuPasteleria = {
     pasteles: [
       { id: "pas2", n: "Pastel de Cumpleaños Familiar", pBase: 45.00, img: "./dulce-familiar.jpeg", desc: "Rendimiento aproximado de 35 a 40 porciones." },
@@ -237,8 +237,11 @@
       { id: "pas3", n: "Pastel de Cumpleaños Pequeño", pBase: 20.00, img: "./dulce-chico.jpeg", desc: "Rendimiento aproximado de 10 a 12 porciones." }
     ],
     postres: [
-      { id: "pos1", n: "Mini Dulces Variados (Docena)", pBase: 12.00, img: "./mini-dulces.jpg", desc: "Caja de 12 unidades surtidas ideales para mesas de dulces." },
-      { id: "pos2", n: "Cupcakes Decorados (6 unidades)", pBase: 10.00, img: "./cupcakes.jpg", desc: "Con cobertura cremosa combinada a juego." }
+      { id: "pos1", n: "Cupcake", pBase: 0.00, img: "./cupcakes-postres.jpg", desc: "Delicioso ponquecito individual con cobertura cremosa." },
+      { id: "pos2", n: "Volteado de Piña", pBase: 0.00, img: "./volteado-de-piña.jpeg", desc: "Bizcocho tradicional caramelizado con piña y cerezas." },
+      { id: "pos3", n: "Alfajores de Maicena", pBase: 0.00, img: "./alfajore-postre.jpeg", desc: "Suaves galletas artesanales rellenas de manjar y coco rallado." },
+      { id: "pos4", n: "Dulce de Leche", pBase: 0.00, img: "./dulcedeleche-postre.jpg", desc: "Postre cremoso a base de dulce de leche artesanal." },
+      { id: "pos5", n: "Mousse de Maracuyá", pBase: 0.00, img: "./ratón-maracuya.jpeg", desc: "Postre ligero con un toque ácido y dulce de fruta de la pasión." }
     ]
   };
 
@@ -365,7 +368,7 @@
 
     return `
       <div class="plato-card">
-        <div class="img-container" onclick="abrirZoom('${item.img}', '${item.n}')" style="cursor:pointer;">
+        <div class="img-container" onclick="abrirZoom('${item.img}', '${item.n}')" style="cursor:pointer;" title="Toca para agrandar la imagen">
           <img src="${item.img}" loading="lazy" alt="${item.n}">
         </div>
         <div class="plato-info">
