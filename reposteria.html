@@ -348,7 +348,7 @@
   <!-- Fondo de Pantalla -->
   <div id="background-container"><img id="bg-image" src="" alt="Fondo"></div>
 
-  <!-- Barra de Navegación Superior (Única) -->
+  <!-- Barra de Navegación Superior -->
   <div class="navbar">
     <button class="nav-btn active" id="nav-inicio" onclick="cambiarVista('inicio', this)">Mery Cake</button>
     <button class="nav-btn" id="nav-personalizar" onclick="cambiarVista('personalizar', this)">Personalizar</button>
@@ -420,10 +420,12 @@
     { n: "Spiderman", img: "./personalizado-spiderman.jpeg" }
   ];
 
+  /* Orden de pasteles: Grande (Familiar), Pequeño, Mediano */
   const menuPasteleria = {
     pasteles: [
-      { id: "pas1", n: "Pastel de Cumpleaños Mediano", pBase: 30.00, img: "./pastel-mediano.jpg", desc: "Rendimiento aproximado de 20 a 25 porciones." },
-      { id: "pas2", n: "Pastel de Cumpleaños Familiar", pBase: 45.00, img: "./pastel-familiar.jpg", desc: "Rendimiento aproximado de 35 a 40 porciones." }
+      { id: "pas2", n: "Pastel de Cumpleaños Familiar", pBase: 45.00, img: "./pastel-familiar.jpg", desc: "Rendimiento aproximado de 35 a 40 porciones." },
+      { id: "pas3", n: "Pastel de Cumpleaños Pequeño", pBase: 20.00, img: "./dulce-chico.jpeg", desc: "Rendimiento aproximado de 10 a 12 porciones." },
+      { id: "pas1", n: "Pastel de Cumpleaños Mediano", pBase: 30.00, img: "./dulce-blanco.jpeg", desc: "Rendimiento aproximado de 20 a 25 porciones." }
     ],
     postres: [
       { id: "pos1", n: "Mini Dulces Variados (Docena)", pBase: 12.00, img: "./mini-dulces.jpg", desc: "Caja de 12 unidades surtidas ideales para mesas de dulces." },
@@ -438,7 +440,6 @@
   function cambiarVista(vista, btn) {
     vistaActual = vista;
     
-    // Actualiza botones de navegación activos
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     if (btn) {
       btn.classList.add('active');
@@ -473,7 +474,7 @@
         return;
     }
 
-    // RENDER: Catálogo de Modelos (Se abre desde el botón VER MODELOS)
+    // RENDER: Catálogo de Modelos
     if (vista === 'modelos') {
         let html = `<h2 class="categoria-titulo">Catálogo de Modelos</h2>`;
         html += `<h3 style="color:var(--dorado); width:100%; max-width:480px; margin: 10px 0 15px 0; border-left:3px solid var(--rosa-pastel); padding-left:8px; font-size:16px;">PASTELES (Elige Masa y Relleno)</h3>`;
@@ -550,7 +551,7 @@
     }
   }
 
-  /* Funciones para visualizar las imágenes en grande */
+  /* Modal de Zoom de Imágenes */
   function abrirZoom(urlImg, titulo) {
     document.getElementById('zoom-img').src = obtenerRutaLimpia(urlImg);
     document.getElementById('zoom-caption').innerText = titulo;
