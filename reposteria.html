@@ -402,7 +402,6 @@
 
   // OPTIMIZACIÓN - FUNCIÓN ANTI-CACHÉ: Evita que el navegador use imágenes viejas guardadas en la memoria del celular
   function obtenerRutaLimpia(ruta) {
-    // Agrega la estampa de tiempo actual (?v=12345678) para forzar la lectura del archivo real
     return `${ruta}?v=${new Date().getTime()}`;
   }
 
@@ -412,7 +411,7 @@
     
     // Cambia el estado visual de los botones superiores
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn) btn.classList.add('active');
     
     const container = document.getElementById('app-content');
     
@@ -576,7 +575,7 @@
     dateInput.min = `${yyyy}-${mm}-${dd}`;
   }
 
-  // VALIDACIÓN DE AGNDA: Compara la selección del usuario contra el arreglo de días llenos
+  // VALIDACIÓN DE AGENDA: Compara la selección del usuario contra el arreglo de días llenos
   function validarFechaCalendario(input) {
     if (!input.value) return;
     
@@ -592,11 +591,18 @@
 
   // PERSISTENCIA LOCAL: Salva lo que escribe el usuario para que no se borre al cambiar de pestaña
   function guardarEstadoCustom() {
-    dulcePersonalizado.detalles = document.getElementById('custom-desc').value;
-    dulcePersonalizado.fotoUrl = document.getElementById('custom-photo').value;
-    dulcePersonalizado.tamaño = document.getElementById('custom-size').value;
-    dulcePersonalizado.bizcocho = document.getElementById('custom-bisc').value;
-    dulcePersonalizado.relleno = document.getElementById('custom-rell').value;
+    const descEl = document.getElementById('custom-desc');
+    const photoEl = document.getElementById('custom-photo');
+    const sizeEl = document.getElementById('custom-size');
+    const biscEl = document.getElementById('custom-bisc');
+    const rellEl = document.getElementById('custom-rell');
+
+    if (descEl) dulcePersonalizado.detalles = descEl.value;
+    if (photoEl) dulcePersonalizado.fotoUrl = photoEl.value;
+    if (sizeEl) dulcePersonalizado.tamaño = sizeEl.value;
+    if (biscEl) dulcePersonalizado.bizcocho = biscEl.value;
+    if (rellEl) dulcePersonalizado.relleno = rellEl.value;
+    
     calcularPrecioCustom();
   }
 
@@ -619,6 +625,18 @@
   }
 
   function toggleCustom() {
+    if (!dulcePersonalizado.activo) {
+      // Validaciones antes de activar el diseño
+      if (!dulcePersonalizado.detalles.trim() && !dulcePersonalizado.fotoUrl.trim()) {
+        alert("Por favor escribe una descripción de tu idea o pega el enlace de una foto de referencia.");
+        return;
+      }
+      if (!dulcePersonalizado.fechaEntrega) {
+        alert("Por favor selecciona una fecha de entrega disponible.");
+        return;
+      }
+    }
+    
     dulcePersonalizado.activo = !dulcePersonalizado.activo;
     calcularPrecioCustom();
     actualizarBarra();
@@ -685,32 +703,36 @@
 
   // MOTOR DE DESPACHO WHATSAPP: Convierte la cotización en una cadena de texto codificada para chat móvil
   function enviarWhatsApp() {
-    let t = 0, m = "*NUEVO PEDIDO - MERY CAKE*%0A%0A";
+    let t = 0;
+    let m = "*NUEVO PEDIDO - MERY CAKE*\n\n";
+
     for (let k in cotizacion) {
-      m += `🎂 *${cotizacion[k].nombre}* - $${cotizacion[k].precio.toFixed(2)}%0A`;
-      if (cotizacion[k].esPastel) m += `  • Masa: ${cotizacion[k].bizcocho} | Relleno: ${cotizacion[k].relleno}%0A`;
+      m += `🎂 *${cotizacion[k].nombre}* - $${cotizacion[k].precio.toFixed(2)}\n`;
+      if (cotizacion[k].esPastel) m += `   • Masa: ${cotizacion[k].bizcocho} | Relleno: ${cotizacion[k].relleno}\n`;
       t += cotizacion[k].precio;
     }
+
     if (dulcePersonalizado.activo) {
-      m += `%0A✨ *DULCE 100% PERSONALIZADO*%0A`;
-      m += `📐 Tamaño: ${dulcePersonalizado.tamaño.toUpperCase()}%0A`;
-      m += `🍞 Masa: ${dulcePersonalizado.bizcocho} | 🍯 Relleno: ${dulcePersonalizado.relleno}%0A`;
-      m += `📝 Descripción: ${dulcePersonalizado.detalles || 'No especificada'}%0A`;
-      if (dulcePersonalizado.fotoUrl) { m += `🔗 Link de referencia: ${dulcePersonalizado.fotoUrl}%0A`; }
-      m += `📅 Fecha Solicitada: ${dulcePersonalizado.fechaEntrega || 'A convenir'}%0A`;
+      m += `\n✨ *DULCE 100% PERSONALIZADO*\n`;
+      m += `📐 Tamaño: ${dulcePersonalizado.tamaño.toUpperCase()}\n`;
+      m += `🍞 Masa: ${dulcePersonalizado.bizcocho} | 🍯 Relleno: ${dulcePersonalizado.relleno}\n`;
+      m += `📝 Descripción: ${dulcePersonalizado.detalles || 'No especificada'}\n`;
+      if (dulcePersonalizado.fotoUrl) { m += `🔗 Link de referencia: ${dulcePersonalizado.fotoUrl}\n`; }
+      m += `📅 Fecha Solicitada: ${dulcePersonalizado.fechaEntrega || 'A convenir'}\n`;
       t += dulcePersonalizado.precioTotal;
     }
-    m += `%0A💰 *TOTAL COTIZADO: $${t.toFixed(2)}*`;
+
+    m += `\n💰 *TOTAL COTIZADO: $${t.toFixed(2)}*`;
     
-    // Abre la API oficial de WhatsApp en una pestaña externa
-    window.open("https://wa.me/50761431537?text=" + m, '_blank');
+    // Abre la API oficial de WhatsApp usando encodeURIComponent para garantizar compatibilidad con caracteres especiales
+    window.open("https://wa.me/50761431537?text=" + encodeURIComponent(m), '_blank');
     cerrarConfirmacion();
   }
 
   function irAModelos() { cambiarVista('modelos', document.querySelectorAll('.nav-btn')[1]); }
   
   // ARRANQUE AUTOMÁTICO: Dispara la pantalla de bienvenida al terminar de cargar la estructura DOM
-  window.onload = () => cambiarVista('inicio', document.querySelectorAll('.nav-btn')[0]);
+  window.onload = () => cambiarVista('inicio', documentquerySelectorAll('.nav-btn')[0]);
 </script>
 </body>
 </html>
